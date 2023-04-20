@@ -24,14 +24,6 @@ folders = []
 extensions = set() #всі розширення
 unknown = set()
 
-parser = argparse.ArgumentParser(description='Sorting file')
-parser.add_argument('--source', required=True)
-parser.add_argument('--new', default='Sort_folder')
-
-args = vars(parser.parse_args())
-source = args.get('source')
-new = args.get('new')
-
 
 def get_extension(filename: str) -> str:
     return Path(filename).suffix[1:].upper()
@@ -95,11 +87,17 @@ def delete_folder(folder_to_delete: Path) -> None:
             print(f"Sorry, we can't delete the folder: {folder}")
 
 
-scan(Path(source))
-delete_folder(Path(source))
-
-
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Sorting file')
+    parser.add_argument('--source', required=True)
+    parser.add_argument('--new', default='Sort_folder')
+    args = vars(parser.parse_args())
+    source = args.get('source')
+    new = args.get('new')
+
+    scan(Path(source))
+    delete_folder(Path(source))
+
     print(f'Start in folder: {source}')
     print(f'extension: \n {extensions}')
     print(f'unknown: \n {unknown}')
